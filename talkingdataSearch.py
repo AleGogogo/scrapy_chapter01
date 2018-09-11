@@ -7,7 +7,7 @@ import xlwt
 import xlrd
 from xlutils.copy import copy
 
-def talkingdataSearch(fileName,data,page):
+def talkingdataSearch(fileName,data,n):
     fileName = fileName + ".xls"
     if not os.path.exists(fileName):
         workbook = xlwt.Workbook()  # 使用xlwt新生成一个workbook
@@ -21,7 +21,7 @@ def talkingdataSearch(fileName,data,page):
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
 
-    for index in range(page):# 大循环加载一页的内容(30）个
+    for index in range(n/40+1):# 大循环加载一页的内容(30）个
         url='http://mi.talkingdata.com/appstore/rank.json?date='+str(data)+'&cat=6014&tab=1&page='+str(index)+'&pagesize=30'
         print(index)
         res =requests.get(url)
