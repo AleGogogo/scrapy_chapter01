@@ -6,7 +6,8 @@ import json
 
 import xlwt
 import xlrd
-import xlutils.copy
+from xlutils.copy import copy
+
 
 
 # board_id	board_100_7003
