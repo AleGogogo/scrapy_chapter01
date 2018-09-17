@@ -18,7 +18,7 @@ def yiguanSearchData(keyword, topCount, fileName):
 
     sheet = workbook.add_sheet("易观游戏TOP100" , True)  # 增加一个名称为sheet1的sheet
 
-    row0 = ['排行', '游戏名', '月下载量（万）', '日下载量（万）']  # 第一行内容
+    row0 = ['排行', '游戏名', '月下载量（万）', '日下载量（万）','公司']  # 第一行内容
 
     r = requests.post("http://zhishu.analysys.cn/public/qianfan/appSearch/searchData",
                       data={'words': keyword, 'pageType': 'all', 'page': '1', 'pageSize': topCount})
@@ -38,7 +38,8 @@ def yiguanSearchData(keyword, topCount, fileName):
                 sheet.write(rowIndex + 1, clounmIndex, per['monthActiveNums'])
             if clounmIndex == 3:
                 sheet.write(rowIndex + 1, clounmIndex, per['dayActiveNums'])
-
+            if clounmIndex == 4:
+                sheet.write(rowIndex + 1, clounmIndex, per['developCompanyFullName'])
     workbook.save(fileName)  # 保存workbook为xls格式
 
     return
