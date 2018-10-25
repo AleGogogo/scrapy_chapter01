@@ -1,6 +1,5 @@
 import requests
-from  bs4 import BeautifulSoup
-import re
+
 import os
 
 import xlwt
@@ -20,7 +19,7 @@ def TengXsearch(fileName,n):
     else:
         workbook = copy(xlrd.open_workbook(fileName))
     sheet = workbook.add_sheet("应用宝TOP100", True)
-    row0 = ['排名', '名字', '下载量' , '公司']  # 第一行内容
+    row0 = ['排名', '名字', '下载量' , '公司','apkMd5','apkUrl']  # 第一行内容
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
 
@@ -59,3 +58,7 @@ def writefile(listArray, page, row0, sheet):
                 sheet.write(len(listArray) * page + rowIndex + 1, clounmIndex, per['appDownCount'])
             if clounmIndex == 3:
                 sheet.write(len(listArray) * page + rowIndex + 1, clounmIndex, per['authorName'])
+            if clounmIndex == 4:
+                sheet.write(len(listArray) * page + rowIndex + 1, clounmIndex, per['apkMd5'])
+            if clounmIndex == 5:
+                sheet.write(len(listArray) * page + rowIndex + 1, clounmIndex, per['apkUrl'])
