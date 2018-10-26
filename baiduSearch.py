@@ -1,8 +1,8 @@
-import pathlib
+
 
 import requests
 import os
-import json
+import re
 
 import xlwt
 import xlrd
@@ -20,7 +20,7 @@ def getSearchData(boardId, fileName):
         workbook = copy(xlrd.open_workbook(fileName))
 
     sheet = workbook.add_sheet("百度游戏TOP100", True)
-    row0 = ['排行', '游戏名', '下载量']  # 第一行内容
+    row0 = ['排行', '游戏名','类型', '下载量(万)','下载地址','md5']  # 第一行内容
 
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
@@ -30,6 +30,7 @@ def getSearchData(boardId, fileName):
             boardId) + "&action=ranklist&from=1009556z&apn=" + str(
             page) + "&ndid=fbAzNdAKBr90F1qk8iAek-kQ2J2CtDD82aO2emX9Fti6fj9zNkKt_FMYY&ver=16795814&cll=ga24N_auvi_POei00a2YN_aTv8eH32e5B&platform_version_id=26&abi=armeabi-v7a&usertype=0&board_name=%E7%83%AD%E6%90%9C%E6%A6%9C&pkname=com.baidu.appsearch&is_support_webp=true&name=game_v8&native_api=1&crid=1536481806040&native_api=1&pn=" + str(
             page) + "&f=recommend%24%24%24homepage%40fixedentry%40ranklist%40%E7%83%AD%E6%90%9C%E6%A6%9C&bannert=26%4027%4028%4029%4030%4032%4043&apk_ver=16795814&ptl=hps"
+        print(targetUrl)
         r = requests.get(targetUrl)
         originItem = r.json()
         middleArray = originItem['result']['data']
@@ -52,4 +53,22 @@ def innerFun(row0, pageArray, sheet, page):
             if clounmIndex == 1:
                 sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['sname'])
             if clounmIndex == 2:
-                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['all_download_ori'])
+                #re.compile(r'[1-9]\d*').findall(per['all_download_ori'])
+                download=0
+                """if bool(re.search('[万]',per['usenum_ori'])):
+                    download =re.compile(r'[1-9]\d*').findall(per['usenum_ori'])
+                if bool(re.search('[亿]',per['usenum_ori'])):
+                    str =re.compile(r'[1-9]\d*').findall(per['usenum_ori'])
+                    num =[]
+                    for s in str:
+                        num.append(s)
+                    download = num*10000
+                
+                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['usenum_ori'])"""
+                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['catename'])
+            if clounmIndex == 3:
+                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['usenum_ori'])
+            if clounmIndex == 4:
+                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['download_url'])
+            if clounmIndex == 5:
+                sheet.write(page * len(pageArray) + rowIndex + 1, clounmIndex, per['md5'])

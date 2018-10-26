@@ -14,7 +14,7 @@ def _360marketSearch(fileName,n):
 
     sheet = workbook.add_sheet("360市场TOP100", True)  # 增加一个名称为sheet1的sheet
 
-    row0 = ['排行', '游戏名','下载量(万)','类别']  # 第一行内容
+    row0 = ['排行', '游戏名','下载量(万)','类别','下载地址','md5']  # 第一行内容
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
 
@@ -33,5 +33,9 @@ def _360marketSearch(fileName,n):
                 sheet.write(rowIndex + 1, clounmIndex, download_times)
             if clounmIndex == 3:
                 sheet.write(rowIndex + 1, clounmIndex, per['category_name'])
+            if clounmIndex == 4:
+                sheet.write(rowIndex + 1, clounmIndex, per['down_url'])
+            if clounmIndex == 5:
+                sheet.write(rowIndex + 1, clounmIndex, per['apk_md5'])
 
     workbook.save(fileName)  # 保存workbook为xls格式
