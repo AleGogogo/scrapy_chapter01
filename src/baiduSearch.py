@@ -8,7 +8,7 @@ import xlwt
 import xlrd
 from xlutils.copy import copy
 
-
+from src.cons.constant import ValueName
 
 # board_id	board_100_7003
 # 目前借口只能拿到前100
@@ -20,7 +20,7 @@ def getSearchData(boardId, fileName):
         workbook = copy(xlrd.open_workbook(fileName))
 
     sheet = workbook.add_sheet("百度游戏TOP100", True)
-    row0 = ['排行', '游戏名','类型', '下载量(万)','下载地址','md5']  # 第一行内容
+    row0 = [ValueName.rank, ValueName.name,ValueName.category, ValueName.download_count,ValueName.download_url,ValueName.file_md5]  # 第一行内容
 
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)

@@ -5,7 +5,7 @@ import os
 import xlwt
 import xlrd
 from xlutils.copy import copy
-
+from src.cons.constant import ValueName
 
 
 def TengXsearch(fileName,n):
@@ -19,13 +19,14 @@ def TengXsearch(fileName,n):
     else:
         workbook = copy(xlrd.open_workbook(fileName))
     sheet = workbook.add_sheet("应用宝TOP100", True)
-    row0 = ['排名', '名字', '下载量' , '公司','apkMd5','apkUrl']  # 第一行内容
+    row0 = [ValueName.rank, ValueName.name, ValueName.download_count , ValueName.company,ValueName.file_md5,ValueName.file_md5]  # 第一行内容
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
 
     while totileCount <= n and pageIndex <= 100:
         url = 'http://android.myapp.com/myapp/cate/appList.htm?orgame=2&categoryId=0&pageSize=20&pageContext=' + str(
             pageIndex)
+        print(url)
         pageIndex += 1
         res = requests.get(url)
         originIterm = res.json()

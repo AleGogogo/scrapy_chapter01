@@ -6,8 +6,9 @@ import os
 import xlwt
 import xlrd
 from xlutils.copy import copy
+from src.cons.constant import ValueName
 
-def talkingdataSearch(fileName,data,n):
+def talkingdataSearch(fileName, data, count):
     fileName = fileName + ".xls"
     if not os.path.exists(fileName):
         workbook = xlwt.Workbook()  # 使用xlwt新生成一个workbook
@@ -16,12 +17,12 @@ def talkingdataSearch(fileName,data,n):
 
     sheet = workbook.add_sheet("talkingDataTOP100", True)
 
-    row0=['排名','名字'] # 第一行内容
+    row0=[ValueName.rank,ValueName.name] # 第一行内容
 
     for i in range(len(row0)):
         sheet.write(0, i, row0[i])  # write(行，列，值)
 
-    for index in range(n/40+1):# 大循环加载一页的内容(30）个
+    for index in range(int(count / 30) + 1):# 大循环加载一页的内容(30）个
         url='http://mi.talkingdata.com/appstore/rank.json?date='+str(data)+'&cat=6014&tab=1&page='+str(index)+'&pagesize=30'
         print(index)
         res =requests.get(url)

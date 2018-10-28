@@ -7,6 +7,7 @@ import os
 import xlwt
 import xlrd
 from xlutils.copy import copy
+from src.cons.constant import ValueName
 
 
 def yiguanSearchData(keyword, topCount, fileName):
@@ -18,7 +19,7 @@ def yiguanSearchData(keyword, topCount, fileName):
 
     sheet = workbook.add_sheet("易观游戏TOP100" , True)  # 增加一个名称为sheet1的sheet
 
-    row0 = ['排行', '游戏名', '月下载量（万）', '日下载量（万）','公司']  # 第一行内容
+    row0 = [ValueName.rank, ValueName.name, ValueName.download_count, ValueName.download_count_day,ValueName.company]  # 第一行内容
 
     r = requests.post("http://zhishu.analysys.cn/public/qianfan/appSearch/searchData",
                       data={'words': keyword, 'pageType': 'all', 'page': '1', 'pageSize': topCount})
